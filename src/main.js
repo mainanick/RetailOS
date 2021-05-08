@@ -1,17 +1,18 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
+const constants = require("./constants");
+const isDev = require("electron-is-dev");
 
 function createWindow() {
-  console.log("Here", __dirname);
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 900,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  win.loadFile("client/index.html");
+  isDev ? win.loadURL(constants.devURL) : win.loadFile(constants.frontendURL);
 }
 
 app.whenReady().then(() => {
